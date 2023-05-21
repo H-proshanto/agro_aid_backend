@@ -1,5 +1,5 @@
 const Product = require('./product.model');
-
+const ProductDescription = require('./product-description.model');
 
 const getProductList = async (req, res) => {
     try {
@@ -12,18 +12,23 @@ const getProductList = async (req, res) => {
     }
 }
 
-const getUser = async (req, res) => {
+const getProduct = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const user = await User.findOne({
+        const product = await Product.findOne({
             where: { id },
-            attributes: { exclude: "password" }
+            include: [
+                {
+                    model: ProductDescription,
+                    as: 'description',
+                }
+            ]
         });
 
-        if (!user) return res.status(404).send('No such user exists');
+        if (!product) return res.status(404).send('No such item');
 
-        res.status(200).send(user);
+        res.status(200).send(product);
     } catch (err) {
         console.log(err);
         res.status(500).send("Internal server error");
@@ -33,4 +38,5 @@ const getUser = async (req, res) => {
 module.exports =
 {
     getProductList,
+    getProduct
 }

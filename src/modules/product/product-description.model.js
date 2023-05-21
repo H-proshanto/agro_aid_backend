@@ -2,7 +2,7 @@ const sequelize = require('../../config/lib/sequelize');
 const { DataTypes } = require('sequelize');
 const Product = require('./product.model');
 
-const ProductDescriptions = sequelize.define(
+const ProductDescription = sequelize.define(
   'product-descriptions',
   {
     id: {
@@ -36,9 +36,9 @@ const ProductDescriptions = sequelize.define(
   }
 );
 
-Product.hasOne(ProductDescriptions, {
+Product.hasOne(ProductDescription, {
   as: "description",
   foreignKey: "productId",
 })
 
-module.exports = ProductDescriptions;
+module.exports = ProductDescription;

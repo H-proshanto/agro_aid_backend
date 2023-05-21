@@ -8,8 +8,8 @@ module.exports = (app) => {
     app.route('/products')
         .get(authStrategy, getProductList)
 
-    // .get(authStrategy, getProduct)
-
+    app.route('/products/:id')
+        .get(authStrategy,getProduct)
 
 
 }
